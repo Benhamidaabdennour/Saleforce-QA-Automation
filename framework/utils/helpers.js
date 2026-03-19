@@ -45,9 +45,11 @@ async function selectRandomPicklist(fieldLocator) {
     await anyOpen.first().waitFor({ state: 'hidden', timeout: 1000 }).catch(() => {});
   }
 
+  // Making sure all options are loaded before trying to select one
   await fieldLocator.scrollIntoViewIfNeeded();
   await fieldLocator.click();
 
+  // Wait for the dropdown to appear and load options
   const controlsId = await fieldLocator.getAttribute('aria-controls');
   if (!controlsId) {
     console.log('No aria-controls found; skipping');
@@ -57,23 +59,28 @@ async function selectRandomPicklist(fieldLocator) {
   const listbox = page.locator(`#${controlsId}`);
   await listbox.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
 
+  // Check if the listbox is visible and has options before proceeding
   if (!await listbox.isVisible().catch(() => false)) {
     console.log('Listbox not visible; skipping');
     return false;
   }
 
+  // Extract all option values, excluding placeholders like "--None--"
   const values = await listbox.evaluate(el => {
     return Array.from(el.querySelectorAll('[role="option"]'))
       .map(opt => opt.getAttribute('data-value'))
-      .filter(v => v && v !== '--None--');
+      .filter(v => v && v !== '--None--'); // Filter out invalid options
   });
 
+  // If no valid options are available, close the dropdown and skip selection (works for none only values and dependend picklists with no values)
   if (values.length === 0) {
     console.log('No valid options; skipping');
     await page.keyboard.press('Escape');
     await listbox.waitFor({ state: 'hidden', timeout: 1000 }).catch(() => {});
     return false;
   }
+
+  // Randomly select one of the available options
   const picked = values[Math.floor(Math.random() * values.length)];
   console.log('Selecting:', picked);
 
