@@ -1,0 +1,6 @@
+{
+    "url":  "https://orgfarm-21077db577-dev-ed.develop.lightning.force.com/lightning/o/Account/list?filterName=__Recent",
+    "fields": {
+        "accountNames":["Abdennour", "Benhamida", "Roaa"]
+    }
+}
