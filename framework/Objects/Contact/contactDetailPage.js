@@ -20,6 +20,7 @@ class ContactDetailPage {
     this.fax = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Fax"]//lightning-formatted-phone')
     this.email = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Email"]//lightning-formatted-email')
     this.assistantName = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.AssistantName"]//lightning-formatted-text[@data-output-element-id="output-field"]')
+    this.assistantPhone = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.AssistantPhone"]//lightning-formatted-phone')
     this.languages = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Languages__c"]//lightning-formatted-text[@data-output-element-id="output-field"]')
     this.level = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Level__c"]//lightning-formatted-text[@data-output-element-id="output-field"]')
     this.description = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Description"]//lightning-formatted-text[@data-output-element-id="output-field"]')
@@ -32,21 +33,7 @@ class ContactDetailPage {
     this.contactOwner = page.locator('//records-highlights-details-item//a[contains(@href, "/lightning/r/User/")]')
     this.compactEmail = page.locator('//records-highlights-details-item//a[contains(@href, "mailto")]')
     this.compactPhone = page.locator('//records-highlights-details-item[1]//div//lightning-formatted-phone]')
-    
-
-    // Get field value by label from the detail page
-    this.getFieldValue = (label) =>
-      page
-        .locator("records-record-layout-item, force-record-layout-item")
-        .filter({ hasText: label })
-        .locator("lightning-formatted-text, lightning-formatted-phone, lightning-formatted-url, span.slds-form-element__static",)
-        .first();
-
-    // Record title in the page header (primary field)
-    this.recordTitle = page.locator('lightning-formatted-name[slot="primaryField"]');
-
-
-  }
+      }
 }
 
 export default ContactDetailPage;

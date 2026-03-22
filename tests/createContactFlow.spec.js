@@ -31,8 +31,7 @@ test.describe.serial(" Contact Creation And Validation", () => {
   // Login ONCE before all tests — shared session
   test.beforeAll(async ({ browser }) => {
     contactData = contactDataset();
-    console.log("Generated contact data:", contactData);
-
+    
     // Create a single shared page for all tests in this suite
     page = await browser.newPage();
     await page.goto(ENV.baseUrl);
@@ -44,7 +43,6 @@ test.describe.serial(" Contact Creation And Validation", () => {
     const authSteps = new AuthSteps(loginActions, mfaActions);
 
     await authSteps.AuthSteps();
-    console.log("Logged in once — session shared across all tests");
   });
 
   // Close the shared page after all tests
@@ -64,16 +62,17 @@ test.describe.serial(" Contact Creation And Validation", () => {
     );
   });
 
-  // ── Test 1: Create a new Contact ─────────────────────────────────────────
+  // ── Test 1: Create a new Contact & Validate Creation ──────────────────────────────────
   test("Create new Contact", async () => {
     await contactSteps.createNewContact(contactData);
+    await contactSteps.validateContactCreation(contactData);
     //await contactSteps.validateContactDetails(contactData);
   });
 
-  // ── Test 2: Validate data after creation ─────────────────────────────────
-  /*
-  test("ValidateDataAfterCreation", async () => {
-    await contactSteps.validateContactCreation(contactData);
+  // ── Test 2: Attempt to create without required fields ─────────────────────────────────
+  
+  test("Trigger VRs for empty fields", async () => {
+    await contactSteps.triggerVRsForEmptyFields();
   });
-  */
+  
 });

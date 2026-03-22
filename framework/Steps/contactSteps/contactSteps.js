@@ -1,3 +1,4 @@
+import { da } from '@faker-js/faker';
 import { expect } from '@playwright/test';
 
 class contactsSteps {
@@ -16,30 +17,17 @@ class contactsSteps {
 
         console.log(`Contact form submitted`);
     }  
+    async triggerVRsForEmptyFields(){
+        await this.topMenuActions.navigateTo('Contacts');
+        await this.contactsFormActions.openNewContactForm();
+        await this.contactsFormActions.saveEmpty();
+        await this.contactsFormActions.validateVRsForEmptyFields();
 
-    // Validate toast + all key fields on the details page
-    /*
-  async validateContactCreation(data) {
-    await this.contactsFormActions.contactsDetailPage.recordTitle.waitFor({
-      state: "visible",
-      timeout: 10000,
-    });
- 
-    const titleText =
-      await this.contactsFormActions.contactsDetailPage.recordTitle.innerText();
-    console.log(
-      `Record title: expected="${data.salutation} ${data.firstName} ${data.lastName}" | actual="${titleText}"`,
-    );
- 
-    expect(titleText.trim()).toBe(`${data.salutation} ${data.firstName} ${data.lastName}`);
-    console.log("Contact Name validated successfully");
-  }*/
-/*
-  async validateContactDetails(data) {
-    await this.contactsFormActions.openDetailsPage();
-    await this.contactsFormActions.getFieldsValues();
-    
+    }
+    async validateContactCreation(contactData) {
+      await this.contactsFormActions.openDetailsPage();
+      const actualData = await this.contactsFormActions.getFieldsValues(contactData);
+      await this.contactsFormActions.validateContactDetails(actualData, contactData);
   }
-*/
 }
-export default contactsSteps;
+export default contactsSteps

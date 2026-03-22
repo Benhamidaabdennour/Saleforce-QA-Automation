@@ -25,7 +25,6 @@ class LoginActions {
   async verifyHomePage() {
     const homePage = new HomePage(this.page);
     await homePage.waitForPageLoad();
-    console.log("Home page loaded, login successful!");
   }
 }
 export default LoginActions;

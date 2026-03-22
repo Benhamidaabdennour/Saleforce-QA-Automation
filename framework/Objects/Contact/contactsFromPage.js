@@ -9,12 +9,12 @@ class contactsFormPage {
     this.FirstName = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Name"]//input[@name="firstName"]')
     this.LastName = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Name"]//input[@name="lastName"]')
     this.Account = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.AccountId"]//input[@role="combobox"]');
-    this.Number = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Phone"]//input[@name="Phone"]')
+    this.phone = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Phone"]//input[@name="Phone"]')
     this.otherPhone = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.OtherPhone"]//input[@name="OtherPhone"]')
     this.mobilePhone = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.MobilePhone"]//input[@name="MobilePhone"]')
     this.homePhone = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.HomePhone"]//input[@name="HomePhone"]')
     this.Title =  page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Title"]//input[@name="Title"]')
-    this.Department =  page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Department"]//input[@name="Department"]')
+    this.department =  page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Department"]//input[@name="Department"]')
     this.email =  page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Email"]//input[@name="Email"]')
     this.fax =  page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Fax"]//input[@name="Fax"]')
     this.birthday =  page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Birthdate"]//input[@name="Birthdate"]')
@@ -49,6 +49,10 @@ class contactsFormPage {
     // toast message
     this.toastMessage = page.locator('.toastMessage')
     this.toastSuccess = page.locator('.slds-theme_success')
+
+    // Error messages
+    this.lastNameError = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Name"]//div[@part="help-text"][@data-name="lastName"]')
+    this.saveFormError = page.locator('//*/div[@role="dialog"]//records-record-edit-error-header//h2')
 }
 }
 

@@ -1,10 +1,8 @@
 import * as OTPAuth from 'otpauth';
 
 function generateMfaCode() {
-    console.log('inside generateMfaCode function');
 
   const secret = process.env.TOTP_SECRET;
-  console.log('returned ' + secret);
 
   if (!secret) throw new Error('TOTP_SECRET undefined');
 

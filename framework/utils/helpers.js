@@ -1,5 +1,3 @@
-// This functions takes a locator for a lookup field and the value to select, then performs the necessary interactions 
-// to select the value from the dropdown options that appear.
 import { faker } from '@faker-js/faker';
 
 async function lookupSelector(fieldLocator, value) {
@@ -35,7 +33,7 @@ async function lookupSelector(fieldLocator, value) {
     await matchingOption.click();
 }
 
-async function selectRandomPicklist(fieldLocator) {
+async function selectRandomPicklist2(fieldLocator) {
   const page = fieldLocator.page();
 
   // Close any previously open dropdown before interacting with this field
@@ -52,8 +50,8 @@ async function selectRandomPicklist(fieldLocator) {
   // Wait for the dropdown to appear and load options
   const controlsId = await fieldLocator.getAttribute('aria-controls');
   if (!controlsId) {
-    console.log('No aria-controls found; skipping');
-    return false;
+    //console.log('No aria-controls found; skipping');
+    return null;
   }
 
   const listbox = page.locator(`#${controlsId}`);
@@ -61,8 +59,8 @@ async function selectRandomPicklist(fieldLocator) {
 
   // Check if the listbox is visible and has options before proceeding
   if (!await listbox.isVisible().catch(() => false)) {
-    console.log('Listbox not visible; skipping');
-    return false;
+    //console.log('Listbox not visible; skipping');
+    return null;
   }
 
   // Extract all option values, excluding placeholders like "--None--"
@@ -74,15 +72,14 @@ async function selectRandomPicklist(fieldLocator) {
 
   // If no valid options are available, close the dropdown and skip selection (works for none only values and dependend picklists with no values)
   if (values.length === 0) {
-    console.log('No valid options; skipping');
+    //console.log('No valid options; skipping');
     await page.keyboard.press('Escape');
     await listbox.waitFor({ state: 'hidden', timeout: 1000 }).catch(() => {});
-    return false;
+    return null;
   }
 
   // Randomly select one of the available options
   const picked = values[Math.floor(Math.random() * values.length)];
-  console.log('Selecting:', picked);
 
   await listbox.locator(`[role="option"][data-value="${picked}"]`).click({ force: true });
   await listbox.waitFor({ state: 'hidden', timeout: 2000 }).catch(async () => {
@@ -90,7 +87,66 @@ async function selectRandomPicklist(fieldLocator) {
     await page.keyboard.press('Escape');
   });
 
-  return true;
-}
+  return picked.label; // Return the selected value to update Data object
 
+
+}
+async function selectRandomPicklist(fieldLocator) {
+  const page = fieldLocator.page();
+
+  // Close any open listbox before interacting
+  const anyOpen = page.locator('div[role="listbox"]:visible');
+  if (await anyOpen.count() > 0) {
+    await page.keyboard.press('Escape');
+    await anyOpen.first().waitFor({ state: 'hidden', timeout: 1000 }).catch(() => {});
+  }
+
+  await fieldLocator.scrollIntoViewIfNeeded();
+  await fieldLocator.click();
+
+  const controlsId = await fieldLocator.getAttribute('aria-controls');
+  if (!controlsId) {
+    console.log('No aria-controls found; skipping');
+    return null;
+  }
+
+  const listbox = page.locator(`#${controlsId}`);
+  await listbox.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
+
+  if (!await listbox.isVisible().catch(() => false)) {
+    console.log('Listbox not visible; skipping');
+    return null;
+  }
+
+  // Get data-value AND display label for each option
+  const values = await listbox.evaluate(el => {
+    return Array.from(el.querySelectorAll('[role="option"]'))
+      .filter(opt => opt.getAttribute('data-value') && opt.getAttribute('data-value') !== '--None--')
+      .map(opt => ({
+        value: opt.getAttribute('data-value'),
+        label: opt.textContent.trim() || opt.getAttribute('data-value')
+      }));
+  });
+
+  if (values.length === 0) {
+    console.log('No valid options; closing cleanly');
+    await page.keyboard.press('Escape');
+    await listbox.waitFor({ state: 'hidden', timeout: 1000 }).catch(() => {});
+    return null;
+  }
+
+  const picked = values[Math.floor(Math.random() * values.length)];
+
+  await listbox.locator(`[role="option"][data-value="${picked.value}"]`).click({ force: true });
+  await listbox.waitFor({ state: 'hidden', timeout: 3000 }).catch(async () => {
+    await page.keyboard.press('Escape');
+  });
+
+  // Read what the field now displays — this is the full label (e.g. "United States" not "US")
+  const displayedValue = await fieldLocator.inputValue().catch(() => 
+    fieldLocator.getAttribute('data-value')
+  );
+
+  return displayedValue;
+}
 export { lookupSelector, selectRandomPicklist };
