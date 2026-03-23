@@ -29,5 +29,20 @@ class contactsSteps {
       const actualData = await this.contactsFormActions.getFieldsValues(contactData);
       await this.contactsFormActions.validateContactDetails(actualData, contactData);
   }
+
+    async editContactDetails(newData, oldData){
+      await this.topMenuActions.navigateTo('Contacts');
+      await this.contactsFormActions.selectAllContactsList();
+      await this.contactsFormActions.searchContactInListView(oldData.firstName + ' ' + oldData.lastName);
+      await this.contactsFormActions.openDetailsPage()
+      await this.contactsFormActions.openEditForm();
+      await this.contactsFormActions.fillContactForm(newData);
+      await this.contactsFormActions.saveEdit();
+    }
+    async validateContactUpdate(newData){
+      const actualData = await this.contactsFormActions.getFieldsValues();
+      await this.contactsFormActions.validateContactDetails(actualData, newData);
+    }
+
 }
 export default contactsSteps

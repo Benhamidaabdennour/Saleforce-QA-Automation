@@ -110,6 +110,13 @@ class contactsActions {
         
         console.log('Record saved successfully');
 }
+    async saveEdit() {
+        await this.contactsFormPage.saveBtn.waitFor({ state: 'visible', timeout: 5000 });
+        await this.contactsFormPage.saveBtn.click();
+        await this.contactsFormPage.saveBtn.waitFor({ state: 'hidden', timeout: 10000 });
+        await this.contactsPage.page.waitForURL('**/view', { timeout: 10000 });
+        console.log('Record updated successfully');
+    }
 
     async getFieldsValues(){
 
@@ -233,6 +240,30 @@ class contactsActions {
         console.log('Last Name required field error message is displayed as expected')
         expect(await this.contactsFormPage.saveFormError).toBeVisible()
         console.log('Save form error message is displayed as expected')
+    }
+
+    async selectAllContactsList(){
+        await this.contactsPage.listViewPicker.click()
+        await this.contactsPage.recentListViewsText.waitFor({state: 'visible'})
+        await this.contactsPage.listVewAllContacts.click()
+    }
+
+    async searchContactInListView(contactName) {
+        await this.contactsPage.listVewSearchBox.fill(contactName);
+        await this.contactsPage.listVewSearchBox.press('Enter');
+
+        // Wait for results and find exact match
+        const contactLink = this.contactsPage.getContactLinkByName(contactName);
+        await contactLink.waitFor({ state: 'visible', timeout: 10000 });
+        await contactLink.evaluate(el => el.click());
+        
+        await this.contactsPage.page.waitForURL('**/view', { timeout: 15000 });
+        await this.contactsDetailPage.detailsTab.click();
+    }    
+async openEditForm(){
+        await this.contactsDetailPage.dropDownBtn.click()
+        await this.contactsDetailPage.editBtn.click()
+        await this.contactsFormPage.FirstName.waitFor({state: 'visible'})
     }
 }
 

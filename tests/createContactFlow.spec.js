@@ -22,7 +22,7 @@ import {contactDataset} from '../framework/data/Contact/contactData';
 import contactDetailPage from '../framework/Objects/Contact/contactDetailPage';
 
 test.describe.serial(" Contact Creation And Validation", () => {
-  //test.setTimeout(120000);
+  test.setTimeout(120000);
 
   let page;
   let contactData;
@@ -67,6 +67,13 @@ test.describe.serial(" Contact Creation And Validation", () => {
     await contactSteps.createNewContact(contactData);
     await contactSteps.validateContactCreation(contactData);
     //await contactSteps.validateContactDetails(contactData);
+  });
+
+  test("Edit a contact", async () => {
+      const editData = contactDataset();
+      await contactSteps.editContactDetails(editData, contactData);
+      await contactSteps.validateContactUpdate(editData);
+
   });
 
   // ── Test 2: Attempt to create without required fields ─────────────────────────────────

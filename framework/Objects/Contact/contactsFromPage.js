@@ -43,7 +43,8 @@ class contactsFormPage {
     this.description = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Description"]//textarea[@class="slds-textarea"]');
 
     // Buttons
-    this.saveBtn = page.locator('//*/li[@data-target-selection-name="sfdc:StandardButton.Contact.SaveEdit"]//button[@name="SaveEdit"]');
+    //this.saveBtn = page.locator('//*/li[@data-target-selection-name="sfdc:StandardButton.Contact.SaveEdit"]//button[@name="SaveEdit"]');
+    this.saveBtn = page.locator('div[role="dialog"] button[name="SaveEdit"]');
     this.cancelBtn = page.locator('//*/li[@data-target-selection-name="sfdc:StandardButton.Contact.CancelEdit"]//button[@name="CancelEdit"]');
 
     // toast message

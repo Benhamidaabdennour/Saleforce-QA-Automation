@@ -3,7 +3,7 @@ class ContactDetailPage {
   constructor(page) {
     this.page = page;
     // details tab to be clicked
-    this.detailsTab = page.locator('//*/li[@data-target-selection-name="detailTabTab"]')
+    this.detailsTab = page.locator('//*/li[@data-target-selection-name="detailTabTab"]').first();
 
     // All fields without Edit access
     this.contactName = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Name"]//lightning-formatted-name[@data-output-element-id="output-field"]');
@@ -33,6 +33,15 @@ class ContactDetailPage {
     this.contactOwner = page.locator('//records-highlights-details-item//a[contains(@href, "/lightning/r/User/")]')
     this.compactEmail = page.locator('//records-highlights-details-item//a[contains(@href, "mailto")]')
     this.compactPhone = page.locator('//records-highlights-details-item[1]//div//lightning-formatted-phone]')
+
+    // Buttons
+    this.dropDownBtn = page.locator('//*/ul[@role="presentation"]//lightning-button-menu//button')
+    this.editBtn = page.locator('//*/lightning-menu-item[@data-target-selection-name="sfdc:StandardButton.Contact.Edit"]')
+    this.saveBtn = page.locator('button[name="SaveEdit"]')
+
+
+  // Toast message
+    this.updateToastMessage = page.locator('//*/div[@data-key="success"]')
       }
 }
 
