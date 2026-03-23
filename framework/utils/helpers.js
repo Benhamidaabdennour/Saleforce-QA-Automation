@@ -2,15 +2,16 @@ import { faker } from '@faker-js/faker';
 
 async function lookupSelector(fieldLocator, value) {
   const page = fieldLocator.page();
-
+/**
   // Skip if field is readonly (e.g. already populated in edit mode)
   const isReadOnly = await fieldLocator.getAttribute('aria-readonly');
   if (isReadOnly === 'true') {
     console.log('Lookup field is readonly; skipping');
     return;
   }
-
+ */
   await fieldLocator.click();
+  await fieldLocator.press('Backspace');
   await fieldLocator.fill('');
   await fieldLocator.type(value, { delay: 50 });
 

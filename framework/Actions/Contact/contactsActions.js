@@ -9,7 +9,7 @@ class contactsActions {
         this.contactsFormPage = contactsFormPage
         this.contactsPage = contactsPage
         this.contactsDetailPage = contactsDetailPage    
-    }
+    }  
 
     // Open the new contact form
     async openNewContactForm(){
