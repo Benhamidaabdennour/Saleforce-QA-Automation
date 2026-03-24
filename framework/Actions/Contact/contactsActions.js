@@ -1,6 +1,7 @@
 import { tr } from "@faker-js/faker";
-import {lookupSelector, selectRandomPicklist } from "../../utils/helpers.js";
+import {lookupSelector, selectRandomPicklist, getPicklistValues, validatePicklistValues } from "../../utils/helpers.js";
 import { expect } from '@playwright/test';
+import { EXPECTED_PICKLIST_VALUES } from "../../data/Contact/contactData"
 
 const normalize = (str) => str?.replace(/\u00A0/g, ' ').replace(/\r/g, '').trim();
 
@@ -266,8 +267,15 @@ class contactsActions {
         await this.contactsFormPage.FirstName.waitFor({state: 'visible'})
     }
 
-    async contactToJson(){
-        
+    async validateAllPicklits(){
+        // Init form object
+        const form = this.contactsFormPage
+
+        // Function already call getPicklistValues() no need to const in a variable
+        await validatePicklistValues(form.level, EXPECTED_PICKLIST_VALUES.level, "Level");
+        await validatePicklistValues(form.leadSource, EXPECTED_PICKLIST_VALUES.leadSource, "Lead Source");
+        await validatePicklistValues(form.NameSalutation, EXPECTED_PICKLIST_VALUES.salutation, "Name Salutation");
+
     }
 
 }

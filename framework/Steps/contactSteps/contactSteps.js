@@ -1,5 +1,3 @@
-import { da } from '@faker-js/faker';
-import { expect } from '@playwright/test';
 import { saveToJson, updateRecordJson } from '../../utils/saveToJson';
 
 class contactsSteps {
@@ -45,6 +43,15 @@ class contactsSteps {
     async validateContactUpdate(newData){
       const actualData = await this.contactsFormActions.getFieldsValues();
       await this.contactsFormActions.validateContactDetails(actualData, newData);
+    }
+
+    async validatePicklitsValues(){
+        console.log(`Inspecting Picklit Values of Contacts`);
+
+        await this.topMenuActions.navigateTo('Contacts');
+        await this.contactsFormActions.openNewContactForm();
+        await this.contactsFormActions.validateAllPicklits();
+
     }
 
 }

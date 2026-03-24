@@ -35,5 +35,11 @@ const contactDataset = () => ({
     department: faker.company.name()
 });
 
+const EXPECTED_PICKLIST_VALUES = {
+  level:       ['Primary', 'Secondary', 'Tertiary'],
+  leadSource:  ['Web', 'Phone Inquiry', 'Partner Referral', 'Purchased List', 'Other'],
+  salutation:  ['Mr.', 'Ms.', 'Mrs.', 'Dr.', 'Prof.', 'Mx.'],
+};
+
 // Exporting the contact data and picklist values for use in tests and actions
-export { contactDataset }    
+export { contactDataset, EXPECTED_PICKLIST_VALUES}    

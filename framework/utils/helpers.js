@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { expect } from '@playwright/test';
 
 async function lookupSelector(fieldLocator, value) {
   const page = fieldLocator.page();
@@ -86,4 +86,61 @@ async function selectRandomPicklist(fieldLocator) {
 
   return displayedValue;
 }
-export { lookupSelector, selectRandomPicklist };
+
+async function getPicklistValues(fieldLocator) {
+  // Keeping same logic from "selectRandomPicklist()"
+  // Following same safety checks to avoid having two or more picklists activated in the backend
+  const page = fieldLocator.page();
+
+  // Close any open listbox before interacting
+  const anyOpen = page.locator('div[role="listbox"]:visible');
+  if (await anyOpen.count() > 0) {
+    await page.keyboard.press('Escape');
+    await anyOpen.first().waitFor({ state: 'hidden', timeout: 1000 }).catch(() => {});
+  }
+
+  await fieldLocator.scrollIntoViewIfNeeded();
+  await fieldLocator.click();
+
+  const controlsId = await fieldLocator.getAttribute('aria-controls');
+  if (!controlsId) {
+    console.log('No aria-controls found; skipping');
+    return [];
+  }
+
+  const listbox = page.locator(`#${controlsId}`);
+  await listbox.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
+
+  if (!await listbox.isVisible().catch(() => false)) {
+    console.log('Listbox not visible; skipping');
+    return [];
+  }
+
+  const values = await page.locator(`#${controlsId} [role="option"]`).evaluateAll(opts =>
+    opts.map(o => o.getAttribute('data-value')).filter(v => v && v !== '--None--')
+  );
+
+  // Close the listbox after reading
+  await fieldLocator.press('Escape');
+
+  return values;
+}
+
+async function validatePicklistValues(fieldLocator, expectedValues, fieldName) {
+  // Comparing two arrays with filter method to avoind going through all values
+  // if they match it will pass, if not, we will know if it's missing values or has more compared to expected in the data files
+  const actualValues = await getPicklistValues(fieldLocator);
+  
+  const missing = expectedValues.filter(v => !actualValues.includes(v));
+  const extra   = actualValues.filter(v => !expectedValues.includes(v));
+  
+  if (missing.length > 0) console.error(`Missing values: ${missing}`);
+  if (extra.length > 0)   console.warn(`Unexpected extra values: ${extra}`);
+
+  expect(missing).toHaveLength(0);
+  console.log(fieldName + " " + "picklist values are correct.")
+
+  return actualValues;
+}
+
+export { lookupSelector, selectRandomPicklist, getPicklistValues, validatePicklistValues };

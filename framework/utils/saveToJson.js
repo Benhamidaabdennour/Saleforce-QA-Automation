@@ -16,6 +16,7 @@ import path from 'path';
 
 const BASE_DIR = './dataset/records';
 
+// Usefull functions to handle naming, paths, objects selection
 function getToday() {
   return new Date().toISOString().split('T')[0];
 }
