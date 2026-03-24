@@ -107,7 +107,7 @@ async function getPicklistValues(fieldLocator) {
     console.log('No aria-controls found; skipping');
     return [];
   }
-
+  // Making sure no empty picklists are tested
   const listbox = page.locator(`#${controlsId}`);
   await listbox.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
 
@@ -134,12 +134,17 @@ async function validatePicklistValues(fieldLocator, expectedValues, fieldName) {
   const missing = expectedValues.filter(v => !actualValues.includes(v));
   const extra   = actualValues.filter(v => !expectedValues.includes(v));
   
+  // Loggin any extra or missing values to make fix easier
   if (missing.length > 0) console.error(`Missing values: ${missing}`);
   if (extra.length > 0)   console.warn(`Unexpected extra values: ${extra}`);
 
   expect(missing).toHaveLength(0);
+  expect(extra).toHaveLength(0);
+
+  // Logging which field is being validated
   console.log(fieldName + " " + "picklist values are correct.")
 
+  // return if need for loggin later
   return actualValues;
 }
 
