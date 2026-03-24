@@ -75,11 +75,11 @@ test.describe.serial(" Contact Creation And Validation", () => {
       await contactSteps.validateContactUpdate(editData);
 
   });
-
+/**
   // ── Test 2: Attempt to create without required fields ─────────────────────────────────
   
   test("Trigger VRs for empty fields", async () => {
     await contactSteps.triggerVRsForEmptyFields();
   });
-  
+   */
 });

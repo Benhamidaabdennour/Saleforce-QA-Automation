@@ -260,11 +260,16 @@ class contactsActions {
         await this.contactsPage.page.waitForURL('**/view', { timeout: 15000 });
         await this.contactsDetailPage.detailsTab.click();
     }    
-async openEditForm(){
+    async openEditForm(){
         await this.contactsDetailPage.dropDownBtn.click()
         await this.contactsDetailPage.editBtn.click()
         await this.contactsFormPage.FirstName.waitFor({state: 'visible'})
     }
+
+    async contactToJson(){
+        
+    }
+
 }
 
 

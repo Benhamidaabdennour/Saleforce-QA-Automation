@@ -1,5 +1,6 @@
 import { da } from '@faker-js/faker';
 import { expect } from '@playwright/test';
+import { saveToJson, updateRecordJson } from '../../utils/saveToJson';
 
 class contactsSteps {
   constructor(topMenuActions, contactsFormActions, contactsDetailPage) {
@@ -14,6 +15,7 @@ class contactsSteps {
         await this.contactsFormActions.openNewContactForm();
         await this.contactsFormActions.fillContactForm(data);
         await this.contactsFormActions.saveForm();
+        saveToJson('contact', data);
 
         console.log(`Contact form submitted`);
     }  
@@ -38,6 +40,7 @@ class contactsSteps {
       await this.contactsFormActions.openEditForm();
       await this.contactsFormActions.fillContactForm(newData);
       await this.contactsFormActions.saveEdit();
+      updateRecordJson('contact', newData);
     }
     async validateContactUpdate(newData){
       const actualData = await this.contactsFormActions.getFieldsValues();

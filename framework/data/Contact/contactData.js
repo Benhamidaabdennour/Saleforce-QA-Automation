@@ -1,8 +1,10 @@
 import { faker } from '@faker-js/faker';
+    const now = new Date();
+    const prefix = now.toISOString().replace(/[:.]/g, '-').slice(0, 19); // 2026-03-22T21-30-00
 
 // Generate random contact data using faker and the defined picklist values
 const contactDataset = () => ({
-    firstName: faker.person.firstName(),
+    firstName: `${prefix} ${faker.person.firstName()}`,// faker.person.firstName()
     lastName: faker.person.lastName(),
     account: 'GenePoint',
     reportsTo: 'Abdennour Benhamida',
