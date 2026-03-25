@@ -66,7 +66,7 @@ async function selectRandomPicklist(fieldLocator) {
   });
 
   if (values.length === 0) {
-    console.log('No valid options; closing cleanly');
+    //console.log('No valid options; closing cleanly'); uncomment for debugging only
     await page.keyboard.press('Escape');
     await listbox.waitFor({ state: 'hidden', timeout: 1000 }).catch(() => {});
     return null;
@@ -142,7 +142,7 @@ async function validatePicklistValues(fieldLocator, expectedValues, fieldName) {
   expect(extra).toHaveLength(0);
 
   // Logging which field is being validated
-  console.log(fieldName + " " + "picklist values are correct.")
+  console.log("✅ " + fieldName + " " + "picklist values are correct.")
 
   // return if need for loggin later
   return actualValues;
@@ -157,11 +157,45 @@ async function getFormFieldLabels(page) {
 }
 
 async function getDetailPageFieldLabels(page) {
-  // Detail page uses dt elements for labels
+  // Detail page uses dt elements for labels, so we query them all
   const labels = await page.locator('dt, .slds-form-element__label').allTextContents();
   return labels
     .map(l => l.trim().replace('*', '').trim())
     .filter(l => l.length > 0);
 }
 
-export { lookupSelector, selectRandomPicklist, getPicklistValues, validatePicklistValues, getDetailPageFieldLabels, getFormFieldLabels};
+async function getRelatedListTitles(page) {
+  const titles = await page
+    .locator('[role="tabpanel"]').first() // Related is always first tabpanel
+    .locator('article h2, article h3')
+    .allTextContents();
+
+    return titles
+    .map(t => t.trim().replace(/\(\d+\)/g, '').trim())
+    .filter(t => t.length > 0);
+}
+async function validateRelatedLists(page, expectedLists) {
+  //Simple filter function to handle what's missing and/ or extra for better reporting
+  const actualLists = await getRelatedListTitles(page);
+  
+  const missing = expectedLists.filter(l => !actualLists.includes(l));
+  const extra   = actualLists.filter(l => !expectedLists.includes(l));
+
+  if (missing.length > 0) console.error(`❌ Missing related lists: ${missing.join(', ')}`);
+  if (extra.length > 0)   console.error(`❌ Extra related lists not in expected: ${extra.join(', ')}`);
+
+  expect(missing).toHaveLength(0);
+  expect(extra).toHaveLength(0);
+
+  console.log(`✅ All expected related lists are present`);
+}
+
+export {  lookupSelector, 
+          selectRandomPicklist, 
+          getPicklistValues, 
+          validatePicklistValues, 
+          getDetailPageFieldLabels, 
+          getFormFieldLabels,
+          validateRelatedLists,
+          getRelatedListTitles
+      };

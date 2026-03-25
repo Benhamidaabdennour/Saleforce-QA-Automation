@@ -1,7 +1,7 @@
 import { tr } from "@faker-js/faker";
-import {lookupSelector, selectRandomPicklist, getPicklistValues, validatePicklistValues, getFormFieldLabels, getDetailPageFieldLabels } from "../../utils/helpers.js";
+import {lookupSelector, selectRandomPicklist, validatePicklistValues, getFormFieldLabels, getDetailPageFieldLabels, validateRelatedLists } from "../../utils/helpers.js";
 import { expect } from '@playwright/test';
-import { EXPECTED_PICKLIST_VALUES } from "../../data/Contact/contactData"
+import { EXPECTED_PICKLIST_VALUES, CONTACT_RELATED_LISTS } from "../../data/Contact/contactData"
 
 const normalize = (str) => str?.replace(/\u00A0/g, ' ').replace(/\r/g, '').trim();
 
@@ -115,7 +115,7 @@ class contactsActions {
         // Wait for navigation to detail page
         await this.contactsFormPage.saveBtn.page().waitForURL('**/view', { timeout: 10000 });
         
-        console.log('Record saved successfully');
+        // console.log('Record saved successfully'); uncomment for debugging only
 }
     async saveEdit() {
         await this.contactsFormPage.saveBtn.waitFor({ state: 'visible', timeout: 5000 });
@@ -304,8 +304,16 @@ class contactsActions {
         console.log(`✅ All ${expectedLabels.length} detail labels present`);
     }
 
+    async validateRelatedLists(relatedLists) {
+        // Making sure UI shows related list tab content
+        await this.contactsDetailPage.relatedListsTab.click();
 
+        // Actual Testing
+        await validateRelatedLists(
+            this.contactsDetailPage.page, 
+            relatedLists
+        );
+    }
 }
-
 
 export default contactsActions

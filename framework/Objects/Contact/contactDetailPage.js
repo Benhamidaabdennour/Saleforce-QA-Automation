@@ -4,6 +4,7 @@ class ContactDetailPage {
     this.page = page;
     // details tab to be clicked
     this.detailsTab = page.locator('//*/li[@data-target-selection-name="detailTabTab"]').first();
+    this.relatedListsTab = page.locator('//*/li[@data-target-selection-name="relatedListsTabTab"]');
 
     // All fields without Edit access
     this.contactName = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Name"]//lightning-formatted-name[@data-output-element-id="output-field"]');

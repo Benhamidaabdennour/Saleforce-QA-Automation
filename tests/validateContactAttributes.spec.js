@@ -18,8 +18,9 @@ import AuthSteps from '../framework/Steps/Login/loginSteps';
 import contactsSteps from '../framework/Steps/contactSteps/contactSteps';
 
 // Data to import
-import {contactDataset} from '../framework/data/Contact/contactData';
+import {contactDataset, CONTACT_FORM_LABELS, CONTACT_RELATED_LISTS} from '../framework/data/Contact/contactData';
 import contactDetailPage from '../framework/Objects/Contact/contactDetailPage';
+import { getTodayRecord } from '../framework/utils/saveToJson';
 
 test.describe.serial(" Contact Creation And Validation", () => {
   test.setTimeout(120000);
@@ -70,5 +71,19 @@ test.describe.serial(" Contact Creation And Validation", () => {
   test("Validate labels (All)", async () => {
     await contactSteps.validateLabels(contactData)
 });
+  // ── Test 3: Validate Related Lists ──────────────────────────────────
+  test("Validate Related Litsts (ALL)", async () => {
+    const todaysRecord = getTodayRecord('contact')
 
+    if (!todaysRecord) {
+    throw new Error('No contacts were created today. Run the create test first.')
+    }
+
+    const firstName = todaysRecord.firstName_edited ?? todaysRecord.firstName
+    const lastName = todaysRecord.lastName_edited ?? todaysRecord.lastName
+
+    const fullName = `${firstName} ${lastName}`
+
+    await contactSteps.validateRelatedLists(CONTACT_RELATED_LISTS, fullName)
+});
 });

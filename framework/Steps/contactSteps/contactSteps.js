@@ -16,7 +16,7 @@ class contactsSteps {
         await this.contactsFormActions.saveForm();
         saveToJson('contact', data);
 
-        console.log(`Contact form submitted`);
+        // console.log(`Contact form submitted`);
     }  
     async triggerVRsForEmptyFields(){
         await this.topMenuActions.navigateTo('Contacts');
@@ -56,6 +56,8 @@ class contactsSteps {
     }
 
     async validateLabels(data){
+        console.log(`Inspecting Labels of Contacts`);
+
         await this.topMenuActions.navigateTo('Contacts');
         await this.contactsFormActions.openNewContactForm();
         await this.contactsFormActions.validateFormFieldLabels(CONTACT_FORM_LABELS)
@@ -67,6 +69,14 @@ class contactsSteps {
 
         saveToJson('contact', data);
     }
+      async validateRelatedLists(relatedList, recordName){
+      console.log(`Inspecting Related Lists of Contacts`);
+
+      await this.topMenuActions.navigateTo('Contacts');
+      await this.contactsFormActions.searchContactInListView(recordName)
+      await this.contactsFormActions.validateRelatedLists(relatedList)
+  }
+
 
 }
 export default contactsSteps

@@ -43,6 +43,16 @@ function ensureTodayFolder(objectName) {
   return dir;
 }
 
+function getTodayRecord(objectName) {
+  const filePath = path.join(BASE_DIR, objectName, getToday(), 'record.json');
+
+  if (!fs.existsSync(filePath)) {
+    return null;
+  }
+
+  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+}
+
 function saveToJson(objectName, recordData) {
   ensureTodayFolder(objectName);
 
@@ -55,7 +65,7 @@ function saveToJson(objectName, recordData) {
 
   fs.writeFileSync(filePath, JSON.stringify(record, null, 2));
 
-  console.log(`${objectName} record saved to: ${filePath}`);
+  // console.log(`${objectName} record saved to: ${filePath}`); uncomment for debugging only
 }
 
  function updateRecordJson(objectName, editData) {
@@ -80,7 +90,7 @@ function saveToJson(objectName, recordData) {
 
   fs.writeFileSync(filePath, JSON.stringify(updated, null, 2));
 
-  console.log(`${objectName} edited record saved`);
+  // console.log(`${objectName} edited record saved`); uncomment for debugging only
 }
 
-export { saveToJson, updateRecordJson };
+export { saveToJson, updateRecordJson, getTodayRecord };

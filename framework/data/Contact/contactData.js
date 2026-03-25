@@ -56,6 +56,13 @@ const CONTACT_DETAIL_LABELS = [
   'Level', 'Description'
 ];
 
+const CONTACT_RELATED_LISTS = [
+    "Opportunities",
+    "Cases",
+    "Campaign History",
+    "Notes & Attachments",
+]
+
 
 // Exporting the contact data and picklist values for use in tests and actions
-export { contactDataset, EXPECTED_PICKLIST_VALUES, CONTACT_DETAIL_LABELS, CONTACT_FORM_LABELS}    
+export { contactDataset, EXPECTED_PICKLIST_VALUES, CONTACT_DETAIL_LABELS, CONTACT_FORM_LABELS, CONTACT_RELATED_LISTS}    
