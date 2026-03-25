@@ -1,4 +1,5 @@
 import { saveToJson, updateRecordJson } from '../../utils/saveToJson';
+import { CONTACT_DETAIL_LABELS, CONTACT_FORM_LABELS } from '../../data/Contact/contactData';
 
 class contactsSteps {
   constructor(topMenuActions, contactsFormActions, contactsDetailPage) {
@@ -51,7 +52,20 @@ class contactsSteps {
         await this.topMenuActions.navigateTo('Contacts');
         await this.contactsFormActions.openNewContactForm();
         await this.contactsFormActions.validateAllPicklits();
+        await this.contactsFormActions.cancelForm();
+    }
 
+    async validateLabels(data){
+        await this.topMenuActions.navigateTo('Contacts');
+        await this.contactsFormActions.openNewContactForm();
+        await this.contactsFormActions.validateFormFieldLabels(CONTACT_FORM_LABELS)
+
+        await this.contactsFormActions.fillContactForm(data);
+        await this.contactsFormActions.saveForm();
+        await this.contactsFormActions.openDetailsPage()
+        await this.contactsFormActions.validateDetailPageLabels(CONTACT_DETAIL_LABELS)
+
+        saveToJson('contact', data);
     }
 
 }

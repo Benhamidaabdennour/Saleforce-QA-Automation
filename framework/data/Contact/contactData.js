@@ -41,5 +41,21 @@ const EXPECTED_PICKLIST_VALUES = {
   salutation:  ['Mr.', 'Ms.', 'Mrs.', 'Dr.', 'Prof.', 'Mx.'],
 };
 
+const CONTACT_FORM_LABELS = [
+  'First Name', 'Phone', 'Home Phone', 'Account Name', 'Mobile',
+  'Title', 'Other Phone', 'Department', 'Fax', 'Birthdate',
+  'Email', 'Reports To', 'Assistant', 'Lead Source', 'Asst. Phone',
+  'Mailing Address', 'Other Address', 'Languages', 'Level', 'Description'
+];
+
+const CONTACT_DETAIL_LABELS = [
+  'Phone', 'Name', 'Home Phone', 'Account Name',
+  'Mobile', 'Title', 'Other Phone', 'Department', 'Fax',
+  'Birthdate', 'Email', 'Reports To', 'Assistant', 'Lead Source',
+  'Mailing Address', 'Other Address', 'Languages',
+  'Level', 'Description'
+];
+
+
 // Exporting the contact data and picklist values for use in tests and actions
-export { contactDataset, EXPECTED_PICKLIST_VALUES}    
+export { contactDataset, EXPECTED_PICKLIST_VALUES, CONTACT_DETAIL_LABELS, CONTACT_FORM_LABELS}    

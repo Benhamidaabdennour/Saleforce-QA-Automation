@@ -66,5 +66,9 @@ test.describe.serial(" Contact Creation And Validation", () => {
   test("Validate picklist values (All)", async () => {
     await contactSteps.validatePicklitsValues()
 });
+  // ── Test 2: Validate labels in Form & Details pages ──────────────────────────────────
+  test("Validate labels (All)", async () => {
+    await contactSteps.validateLabels(contactData)
+});
 
 });

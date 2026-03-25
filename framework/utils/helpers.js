@@ -148,4 +148,20 @@ async function validatePicklistValues(fieldLocator, expectedValues, fieldName) {
   return actualValues;
 }
 
-export { lookupSelector, selectRandomPicklist, getPicklistValues, validatePicklistValues };
+async function getFormFieldLabels(page) {
+  // Get all labeled form elements via ARIA
+  const labels = await page.locator('[role="group"] label, .slds-form-element__label').allTextContents();
+  return labels
+    .map(l => l.trim().replace('*', '').trim())
+    .filter(l => l.length > 0);
+}
+
+async function getDetailPageFieldLabels(page) {
+  // Detail page uses dt elements for labels
+  const labels = await page.locator('dt, .slds-form-element__label').allTextContents();
+  return labels
+    .map(l => l.trim().replace('*', '').trim())
+    .filter(l => l.length > 0);
+}
+
+export { lookupSelector, selectRandomPicklist, getPicklistValues, validatePicklistValues, getDetailPageFieldLabels, getFormFieldLabels};

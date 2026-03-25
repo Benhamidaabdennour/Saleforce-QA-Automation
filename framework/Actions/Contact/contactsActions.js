@@ -1,5 +1,5 @@
 import { tr } from "@faker-js/faker";
-import {lookupSelector, selectRandomPicklist, getPicklistValues, validatePicklistValues } from "../../utils/helpers.js";
+import {lookupSelector, selectRandomPicklist, getPicklistValues, validatePicklistValues, getFormFieldLabels, getDetailPageFieldLabels } from "../../utils/helpers.js";
 import { expect } from '@playwright/test';
 import { EXPECTED_PICKLIST_VALUES } from "../../data/Contact/contactData"
 
@@ -97,6 +97,12 @@ class contactsActions {
          */
         await this.contactsFormPage.saveBtn.waitFor({ state: 'visible', timeout: 5000 });
         await this.contactsFormPage.saveBtn.click({ force: true });
+    }
+
+    async cancelForm(){
+        await this.contactsFormPage.cancelBtn.waitFor({ state: 'visible', timeout: 5000 });
+        await this.contactsFormPage.cancelBtn.click({ force: true });
+
     }
     async saveForm() {
         // This function was edited to include waiting before clicking on Details Tab
@@ -277,6 +283,27 @@ class contactsActions {
         await validatePicklistValues(form.NameSalutation, EXPECTED_PICKLIST_VALUES.salutation, "Name Salutation");
 
     }
+    
+    async validateFormFieldLabels(expectedLabels) {
+        const actualLabels = await getFormFieldLabels(this.contactsFormPage.page);
+        
+        const missing = expectedLabels.filter(l => !actualLabels.includes(l));
+        if (missing.length > 0) {
+            throw new Error(`Missing form labels: ${missing.join(', ')}`);
+        }
+        console.log(`✅ All ${expectedLabels.length} form labels present`);
+    }
+
+    async validateDetailPageLabels(expectedLabels) {
+        const actualLabels = await getDetailPageFieldLabels(this.contactsDetailPage.page);
+
+        const missing = expectedLabels.filter(l => !actualLabels.includes(l));
+        if (missing.length > 0) {
+            throw new Error(`Missing detail labels: ${missing.join(', ')}`);
+        }
+        console.log(`✅ All ${expectedLabels.length} detail labels present`);
+    }
+
 
 }
 
