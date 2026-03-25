@@ -70,20 +70,23 @@ test.describe.serial(" Contact Creation And Validation", () => {
   // ── Test 2: Validate labels in Form & Details pages ──────────────────────────────────
   test("Validate labels (All)", async () => {
     await contactSteps.validateLabels(contactData)
-});
+})
   // ── Test 3: Validate Related Lists ──────────────────────────────────
   test("Validate Related Litsts (ALL)", async () => {
-    const todaysRecord = getTodayRecord('contact')
+        const todaysRecord = getTodayRecord('contact')
 
-    if (!todaysRecord) {
-    throw new Error('No contacts were created today. Run the create test first.')
+        if (
+        !todaysRecord || 
+        !todaysRecord.firstName || 
+        !todaysRecord.lastName
+        ) {
+        throw new Error('No valid contacts were created today. Run the create test first.');
     }
+        const firstName = todaysRecord.firstName_edited ?? todaysRecord.firstName
+        const lastName = todaysRecord.lastName_edited ?? todaysRecord.lastName
 
-    const firstName = todaysRecord.firstName_edited ?? todaysRecord.firstName
-    const lastName = todaysRecord.lastName_edited ?? todaysRecord.lastName
+        const fullName = `${firstName} ${lastName}`
 
-    const fullName = `${firstName} ${lastName}`
-
-    await contactSteps.validateRelatedLists(CONTACT_RELATED_LISTS, fullName)
-});
+        await contactSteps.validateRelatedLists(CONTACT_RELATED_LISTS, fullName)
+    });
 });
