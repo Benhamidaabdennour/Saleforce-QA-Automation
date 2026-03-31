@@ -63,6 +63,5 @@ const CONTACT_RELATED_LISTS = [
     "Notes & Attachments",
 ]
 
-
 // Exporting the contact data and picklist values for use in tests and actions
 export { contactDataset, EXPECTED_PICKLIST_VALUES, CONTACT_DETAIL_LABELS, CONTACT_FORM_LABELS, CONTACT_RELATED_LISTS}    

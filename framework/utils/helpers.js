@@ -73,9 +73,12 @@ async function selectRandomPicklist(fieldLocator) {
   }
 
   const picked = values[Math.floor(Math.random() * values.length)];
-
-  await listbox.locator(`[role="option"][data-value="${picked.value}"]`).click({ force: true });
-  await listbox.waitFor({ state: 'hidden', timeout: 3000 }).catch(async () => {
+// 77 to 79 (included) are a test to see if it's more robust
+    const option = listbox.locator(`[role="option"][data-value="${picked.value}"]`);
+    await option.scrollIntoViewIfNeeded();
+    await option.click({ force: true });  
+    
+    await listbox.waitFor({ state: 'hidden', timeout: 3000 }).catch(async () => {
     await page.keyboard.press('Escape');
   });
 

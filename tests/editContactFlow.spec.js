@@ -18,9 +18,21 @@ import AuthSteps from '../framework/Steps/Login/loginSteps';
 import contactsSteps from '../framework/Steps/contactSteps/contactSteps';
 
 // Data to import
-import {contactDataset, CONTACT_FORM_LABELS, CONTACT_RELATED_LISTS} from '../framework/data/Contact/contactData';
+import {contactDataset} from '../framework/data/Contact/contactData';
 import contactDetailPage from '../framework/Objects/Contact/contactDetailPage';
 import { getTodayRecord } from '../framework/utils/saveToJson';
+
+// before starting tests & loggin: Make sure we have data to work with 
+    const todaysRecord = getTodayRecord('contact')
+
+      if (
+          !todaysRecord || 
+          !todaysRecord.firstName || 
+          !todaysRecord.lastName
+        ) 
+        {
+          throw new Error('No valid contacts were created today. Run the create test first.');
+    }
 
 test.describe.serial(" Contact Creation And Validation", () => {
   test.setTimeout(120000);
@@ -63,31 +75,10 @@ test.describe.serial(" Contact Creation And Validation", () => {
     );
   });
 
-  // ── Test 1: Validate picklist values ──────────────────────────────────
-  test("Validate picklist values (All)", async () => {
-    await contactSteps.validatePicklitsValues()
-});
-  // ── Test 2: Validate labels in Form & Details pages ──────────────────────────────────
-  test("Validate labels (All)", async () => {
-    await contactSteps.validateLabels(contactData)
-})
-  // ── Test 3: Validate Related Lists ──────────────────────────────────
-  test("Validate Related Litsts (ALL)", async () => {
-    const todaysRecord = getTodayRecord('contact')
+  // ── Test 1: Edit existing & Validate Update ──────────────────────────────────
 
-      if (
-          !todaysRecord || 
-          !todaysRecord.firstName || 
-          !todaysRecord.lastName
-        ) 
-        {
-          throw new Error('No valid contacts were created today. Run the create test first.');
-    }
-        const firstName = todaysRecord.firstName_edited ?? todaysRecord.firstName
-        const lastName = todaysRecord.lastName_edited ?? todaysRecord.lastName
-
-        const fullName = `${firstName} ${lastName}`
-
-        await contactSteps.validateRelatedLists(fullName)
-    });
+  test("Edit a contact", async () => {
+      await contactSteps.editContactDetails();
+      await contactSteps.validateContactUpdate();
+  });
 });

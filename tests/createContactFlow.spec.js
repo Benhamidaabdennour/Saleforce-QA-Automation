@@ -64,22 +64,13 @@ test.describe.serial(" Contact Creation And Validation", () => {
 
   // ── Test 1: Create a new Contact & Validate Creation ──────────────────────────────────
   test("Create new Contact", async () => {
-    await contactSteps.createNewContact(contactData);
-    await contactSteps.validateContactCreation(contactData);
-    //await contactSteps.validateContactDetails(contactData);
+    await contactSteps.createNewContact();
+    await contactSteps.validateContactCreation();
   });
 
-  test("Edit a contact", async () => {
-      const editData = contactDataset();
-      await contactSteps.editContactDetails(editData, contactData);
-      await contactSteps.validateContactUpdate(editData);
-
-  });
-/**
   // ── Test 2: Attempt to create without required fields ─────────────────────────────────
   
   test("Trigger VRs for empty fields", async () => {
     await contactSteps.triggerVRsForEmptyFields();
   });
-   */
 });

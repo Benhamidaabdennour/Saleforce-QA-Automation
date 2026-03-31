@@ -83,7 +83,7 @@ class contactsActions {
         if(data.mailingStreet) await form.mailingStreet.fill(data.mailingStreet)
         if(data.mailingCity) await form.mailingCity.fill(data.mailingCity)
         if(data.mailingPostalCode) await form.mailingPostalCode.fill(data.mailingPostalCode)
-       
+            
         if(data.otherStreet) await form.otherStreet.fill(data.otherStreet)
         if(data.otherCity) await form.otherCity.fill(data.otherCity)
         if(data.otherPostalCode) await form.otherPostalCode.fill(data.otherPostalCode)
@@ -153,8 +153,6 @@ class contactsActions {
         };
 
     }
-   
-  
     async alidateToastSuccess() {
         await this.contactsFormPage.toastSuccess.waitFor({
         state: "visible",
