@@ -1,7 +1,7 @@
  class contactPage {
     constructor(page){
         this.page = page;
-        this.newBtn = page.getByRole('button', { name: 'New' })
+        this.newBtn = page.locator('//*/div//li[@data-target-selection-name="sfdc:StandardButton.Contact.NewContact"]/a')
         this.listViewPicker = page.locator('//*/div/lst-list-view-picker//button')
         this.listViewSearchINput = page.locator('//*/div/input[@role="combobox"]')
         this.listVewAllContacts = page.locator('//*/div//lightning-base-combobox-item[@data-value="AllContacts"]')

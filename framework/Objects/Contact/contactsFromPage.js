@@ -52,7 +52,7 @@ class contactsFormPage {
     this.toastSuccess = page.locator('.slds-theme_success')
 
     // Error messages
-    this.lastNameError = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Name"]//div[@part="help-text"][@data-name="lastName"]')
+    this.lastNameError = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Name"]//div[@part="help-text"][@data-name="lastName"]//span')
     this.saveFormError = page.locator('//*/div[@role="dialog"]//records-record-edit-error-header//h2')
 }
 }

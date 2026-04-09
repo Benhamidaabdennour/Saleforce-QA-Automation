@@ -1,5 +1,7 @@
 import { saveToJson, updateRecordJson, getTodayRecord } from '../../utils/saveToJson';
 import { CONTACT_DETAIL_LABELS, CONTACT_FORM_LABELS, CONTACT_RELATED_LISTS, contactDataset } from '../../data/Contact/contactData';
+import languageConfig from '../../config/languageConfig';
+import ENV from '../../config/env';
 const newData = contactDataset()
 
 class contactsSteps {
@@ -12,14 +14,14 @@ class contactsSteps {
         const data = contactDataset()
         console.log(`Creating contact: ${data.firstName} ${data.lastName}`);
 
-        await this.topMenuActions.navigateTo('Contacts');
+        await this.topMenuActions.navigateTo(languageConfig.menuItems.Contacts[ENV.lang]);
         await this.contactsFormActions.openNewContactForm();
         await this.contactsFormActions.fillContactForm(data);
         await this.contactsFormActions.saveForm();
         saveToJson('contact', data);
     }  
     async triggerVRsForEmptyFields(){
-        await this.topMenuActions.navigateTo('Contacts');
+        await this.topMenuActions.navigateTo(languageConfig.menuItems.Contacts[ENV.lang]);
         await this.contactsFormActions.openNewContactForm();
         await this.contactsFormActions.saveEmpty();
         await this.contactsFormActions.validateVRsForEmptyFields();
@@ -42,7 +44,7 @@ class contactsSteps {
 
       console.log(actualFullName)
 
-      await this.topMenuActions.navigateTo('Contacts');
+      await this.topMenuActions.navigateTo(languageConfig.menuItems.Contacts[ENV.lang]);
       await this.contactsFormActions.selectAllContactsList();
       await this.contactsFormActions.searchContactInListView(actualFullName);
       await this.contactsFormActions.openDetailsPage()
@@ -61,7 +63,7 @@ class contactsSteps {
     async validatePicklitsValues(){
         console.log(`Inspecting Picklit Values of Contacts`);
 
-        await this.topMenuActions.navigateTo('Contacts');
+        await this.topMenuActions.navigateTo(languageConfig.menuItems.Contacts[ENV.lang]);
         await this.contactsFormActions.openNewContactForm();
         await this.contactsFormActions.validateAllPicklits();
         await this.contactsFormActions.cancelForm();
@@ -70,7 +72,7 @@ class contactsSteps {
     async validateLabels(data){
         console.log(`Inspecting Labels of Contacts`);
 
-        await this.topMenuActions.navigateTo('Contacts');
+        await this.topMenuActions.navigateTo(languageConfig.menuItems.Contacts[ENV.lang]);
         await this.contactsFormActions.openNewContactForm();
         await this.contactsFormActions.validateFormFieldLabels(CONTACT_FORM_LABELS)
 
@@ -84,7 +86,7 @@ class contactsSteps {
       async validateRelatedLists(recordName){
       console.log(`Inspecting Related Lists of Contacts`);
 
-      await this.topMenuActions.navigateTo('Contacts');
+      await this.topMenuActions.navigateTo(languageConfig.menuItems.Contacts[ENV.lang]);
       await this.contactsFormActions.searchContactInListView(recordName)
       await this.contactsFormActions.validateRelatedLists(CONTACT_RELATED_LISTS)
   }

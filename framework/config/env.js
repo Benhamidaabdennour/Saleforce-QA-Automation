@@ -6,6 +6,7 @@ const ENV = {
   username: process.env.SF_USERNAME,
   password: process.env.SF_PASSWORD,
   totpSecret: process.env.TOTP_SECRET,
+  lang: process.env.LANG || 'en'
 };
 
 export default ENV;

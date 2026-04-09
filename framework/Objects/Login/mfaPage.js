@@ -5,7 +5,7 @@ const { generateMfaCode } = pkg;
   
   constructor(page) {
     this.page = page;
-    this.mfaInput = page.getByLabel('Verification Code');
+    this.mfaInput = page.locator('//*/div//input[@name="tc"]');
     this.verifyButton = page.locator('[name="save"]');
   }
 }

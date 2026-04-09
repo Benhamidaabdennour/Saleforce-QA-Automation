@@ -61,7 +61,6 @@ test.describe.serial(" Contact Creation And Validation", () => {
       ),
     );
   });
-
   // ── Test 1: Create a new Contact & Validate Creation ──────────────────────────────────
   test("Create new Contact", async () => {
     await contactSteps.createNewContact();

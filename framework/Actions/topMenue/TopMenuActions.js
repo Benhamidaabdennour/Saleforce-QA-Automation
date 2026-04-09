@@ -1,4 +1,4 @@
-
+ import ENV from '../../config/env';
  class TopMenuActions {
   constructor(topMenuPage) {
     this.topMenuPage = topMenuPage;

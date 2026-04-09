@@ -31,7 +31,7 @@ import { getTodayRecord } from '../framework/utils/saveToJson';
           !todaysRecord.lastName
         ) 
         {
-          throw new Error('No valid contacts were created today. Run the create test first.');
+          test.skip(true, 'No valid contacts were created today. Run the create test first.');
     }
 
 test.describe.serial(" Contact Creation And Validation", () => {

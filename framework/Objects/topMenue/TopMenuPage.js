@@ -3,8 +3,8 @@
     this.page = page;
 
     // App Launcher
-    this.appLauncherButton = page.getByRole('button', { name: 'App Launcher' });
-    this.appLauncherSearchInput = page.getByPlaceholder('Search apps and items...');
+    this.appLauncherButton = page.locator('//*/div[@role="navigation"]//button');
+    this.appLauncherSearchInput = page.locator('//*/div//one-app-launcher-search-bar//input[@type="search"]');
 
     // App Launcher result item (dynamic — use method below)
     this.appLauncherItemLink = (label) =>

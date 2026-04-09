@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import ENV from '../../config/env';
     const now = new Date();
     const prefix = now.toISOString().replace(/[:.]/g, '-').slice(0, 19); // 2026-03-22T21-30-00
 
@@ -35,33 +36,58 @@ const contactDataset = () => ({
     department: faker.company.name()
 });
 
-const EXPECTED_PICKLIST_VALUES = {
-  level:       ['Primary', 'Secondary', 'Tertiary'],
-  leadSource:  ['Web', 'Phone Inquiry', 'Partner Referral', 'Purchased List', 'Other'],
-  salutation:  ['Mr.', 'Ms.', 'Mrs.', 'Dr.', 'Prof.', 'Mx.'],
-};
+const attributes = {
+  en:{
+    EXPECTED_PICKLIST_VALUES : {
+      level:       ['Primary', 'Secondary', 'Tertiary'],
+      leadSource:  ['Web', 'Phone Inquiry', 'Partner Referral', 'Purchased List', 'Other'],
+      salutation:  ['Mr.', 'Ms.', 'Mrs.', 'Dr.', 'Prof.', 'Mx.'],
+    },
+    CONTACT_FORM_LABELS: [
+      'First Name', 'Phone', 'Home Phone', 'Account Name', 'Mobile',
+      'Title', 'Other Phone', 'Department', 'Fax', 'Birthdate',
+      'Email', 'Reports To', 'Assistant', 'Lead Source', 'Asst. Phone',
+      'Mailing Address', 'Other Address', 'Languages', 'Level', 'Description'
+    ],
+    CONTACT_DETAIL_LABELS: [
+      'Phone', 'Name', 'Home Phone', 'Account Name',
+      'Mobile', 'Title', 'Other Phone', 'Department', 'Fax',
+      'Birthdate', 'Email', 'Reports To', 'Assistant', 'Lead Source',
+      'Mailing Address', 'Other Address', 'Languages', 'Level', 'Description'
+    ],
+    CONTACT_RELATED_LISTS: [
+      'Opportunities', 'Cases', 'Campaign History', 'Notes & Attachments'
+    ]
+},
+  fr:{
+    EXPECTED_PICKLIST_VALUES : {
+      level:       ['Primary', 'Secondary', 'Tertiary'],
+      leadSource:  ['Web', 'Phone Inquiry', 'Partner Referral', 'Purchased List', 'Other'],
+      salutation:  ['Mr.', 'Ms.', 'Mrs.', 'Dr.', 'Prof.', 'Mx.'],
+    },
+    CONTACT_FORM_LABELS: [
+      'Prénom','Nom', 'Téléphone', 'Téléphone (domicile)', 'Nom du compte', 'Téléphone mobile', 'Autre téléphone',
+      'Fonction', 'Service', 'Télécopie', 'Date de naissance', 'Civilité',
+      'Adresse e-mail', 'Responsable hiérarchique', 'Assistant', 'Origine de la piste','Asst. Téléphone',
+      'Adresse postale', 'Autre adresse', 'Languages', 'Level', 'Description'
+    ],
+    CONTACT_DETAIL_LABELS: [
+      'Nom complet', 'Téléphone', 'Téléphone (domicile)', 'Nom du compte', 'Téléphone mobile', 'Autre téléphone',
+      'Fonction', 'Service', 'Télécopie', 'Date de naissance',
+      'Adresse e-mail', 'Responsable hiérarchique', 'Assistant', 'Origine de la piste','Asst. Téléphone',
+      'Adresse postale', 'Autre adresse', 'Languages', 'Level', 'Description'
+    ],
+    CONTACT_RELATED_LISTS: [
+      'Opportunités', 'Requêtes', 'Historique de la campagne', 'Notes et pièces jointes'
+    ],
+  }
+}
+const lang = attributes[ENV.lang] || attributes.en;
 
-const CONTACT_FORM_LABELS = [
-  'First Name', 'Phone', 'Home Phone', 'Account Name', 'Mobile',
-  'Title', 'Other Phone', 'Department', 'Fax', 'Birthdate',
-  'Email', 'Reports To', 'Assistant', 'Lead Source', 'Asst. Phone',
-  'Mailing Address', 'Other Address', 'Languages', 'Level', 'Description'
-];
-
-const CONTACT_DETAIL_LABELS = [
-  'Phone', 'Name', 'Home Phone', 'Account Name',
-  'Mobile', 'Title', 'Other Phone', 'Department', 'Fax',
-  'Birthdate', 'Email', 'Reports To', 'Assistant', 'Lead Source',
-  'Mailing Address', 'Other Address', 'Languages',
-  'Level', 'Description'
-];
-
-const CONTACT_RELATED_LISTS = [
-    "Opportunities",
-    "Cases",
-    "Campaign History",
-    "Notes & Attachments",
-]
+export const EXPECTED_PICKLIST_VALUES = lang.EXPECTED_PICKLIST_VALUES;
+export const CONTACT_FORM_LABELS      = lang.CONTACT_FORM_LABELS;
+export const CONTACT_DETAIL_LABELS    = lang.CONTACT_DETAIL_LABELS;
+export const CONTACT_RELATED_LISTS    = lang.CONTACT_RELATED_LISTS;
 
 // Exporting the contact data and picklist values for use in tests and actions
-export { contactDataset, EXPECTED_PICKLIST_VALUES, CONTACT_DETAIL_LABELS, CONTACT_FORM_LABELS, CONTACT_RELATED_LISTS}    
+export { contactDataset }    

@@ -2,10 +2,11 @@
 class HomePage {
   constructor(page) {
     this.page = page;
+    this.appLauncher = page.locator('//*/div[@role="navigation"]//button');
   }
 
   get appLauncherButton() {
-    return this.page.getByRole("button", { name: "App Launcher" });
+    return this.appLauncher;
   }
 
   async waitForPageLoad() {
