@@ -1,4 +1,3 @@
-
 class ContactDetailPage {
   constructor(page) {
     this.page = page;
@@ -39,7 +38,6 @@ class ContactDetailPage {
     this.dropDownBtn = page.locator('//*/ul[@role="presentation"]//lightning-button-menu//button')
     this.editBtn = page.locator('//*/lightning-menu-item[@data-target-selection-name="sfdc:StandardButton.Contact.Edit"]')
     this.saveBtn = page.locator('button[name="SaveEdit"]')
-
 
   // Toast message
     this.updateToastMessage = page.locator('//*/div[@data-key="success"]')

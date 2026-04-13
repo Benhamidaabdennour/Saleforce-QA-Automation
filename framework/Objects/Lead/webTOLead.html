@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+  <title>Web to Lead</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #eef2f7, #e3e8f0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 420px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .brand {
+      text-align: center;
+      font-weight: bold;
+      color: #0070d2;
+      margin-bottom: 5px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 9px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #0070d2;
+      box-shadow: 0 0 0 2px rgba(0,112,210,0.1);
+    }
+
+    button {
+      width: 100%;
+      padding: 11px;
+      background-color: #0070d2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #005bb5;
+    }
+
+    .footer-note {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #888;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="brand">NovaEdge Solutions</div>
+  <h2>Get Started With Us</h2>
+  <p class="subtitle">
+    Looking to transform your business with smarter digital solutions? 
+    Tell us a bit about yourself and our team will reach out to help you scale faster.
+  </p>
+
+  <form id="leadForm"
+        action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DgL00000LSiYH"
+        method="POST">
+
+    <!-- REQUIRED SALESFORCE HIDDEN FIELDS -->
+    <input type="hidden" name="oid" value="00DgL00000LSiYH">
+    <input type="hidden" name="retURL" value="http://localhost:3000/thank-you">
+
+    <!-- DEBUG (OPTIONAL) -->
+    <!-- <input type="hidden" name="debug" value="1"> -->
+    <!-- <input type="hidden" name="debugEmail" value="abdennour.benhamida@levio.ca"> -->
+
+    <div class="form-group">
+      <label for="name">Full Name *</label>
+      <input type="text" id="name" name="last_name" maxlength="80" required>
+    </div>
+
+    <div class="form-group">
+      <label for="company">Company *</label>
+      <input type="text" id="company" name="company" maxlength="40" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Work Email</label>
+      <input type="email" id="email" name="email" maxlength="80">
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" maxlength="40">
+    </div>
+
+    <button type="submit" id="submitBtn">Request Contact</button>
+
+  </form>
+
+  <div class="footer-note">
+    Trusted by growing businesses worldwide • We respect your privacy
+  </div>
+</div>
+
+<!-- XPATHS FOR PLAYWRIGHT TESTING -->
+<!--
+Name Input:
+//input[@id='name']
+
+Company Input:
+//input[@id='company']
+
+Email Input:
+//input[@id='email']
+
+Phone Input:
+//input[@id='phone']
+
+Submit Button:
+//button[@id='submitBtn']
+
+Form:
+//form[@id='leadForm']
+-->
+
+</body>
+</html>
