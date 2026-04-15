@@ -65,8 +65,13 @@ test.describe.serial(" Web To Lead operations", () => {
   test("Submit Web To Lead form", async () => {
     await leadsSteps.submitWebToLeadForm();
     await page.goto(ENV.baseUrl);
-    await page.reload();
     await leadsSteps.validateWebToLeadCreation();
+
+  });
+  test("Inspect Web To Lead Assignment", async () => {
+    await leadsSteps.submitWebToLeadForm();
+    await page.goto(ENV.baseUrl);
+    await leadsSteps.validateWebToLeadAssignment();
 
   });
 

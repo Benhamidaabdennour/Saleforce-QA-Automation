@@ -10,7 +10,7 @@
     this.company = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Lead.Company"]//lightning-formatted-text');
     this.phone = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Lead.Phone"]//lightning-formatted-phone/a');
     this.email = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Lead.Email"]//lightning-formatted-email//a');
-  
+    this.owner = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Lead.OwnerId"]//force-lookup');
   
   }
 }

@@ -99,5 +99,19 @@ async validateWebtoLeadData(expectedData, actualData) {
         throw new Error(`Web to Lead validation failed:\n${failures.join('\n')}`);
     }
 }
+
+    async getOwner(){
+        await this.leadDetailsPage.owner.waitFor({state: 'visible'})
+        return await this.leadDetailsPage.owner.innerText();
+    }
+
+    async validateWebToLeadAssignment(actualOwner){
+            try {
+                expect(actualOwner).toBe("WebToLead");
+                console.log(`✅ Lead Owner`);
+            } catch {
+                failures.push(`❌ Lead Owner: Expected "WebToLead", but got "${actualOwner}"`);
+            }
+    }
 }
 export default leadActions;

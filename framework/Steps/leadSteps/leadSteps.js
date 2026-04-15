@@ -26,5 +26,16 @@ class leadSteps {
         const actualData = await this.leadActions.getFieldsValues();
         await this.leadActions.validateWebtoLeadData(webToLeadData, actualData);
     }
+
+    async validateWebToLeadAssignment(){
+        console.log(`Inspecting Lead owner for: ${webToLeadData.fullName}`);
+
+        await this.topMenuActions.navigateTo(languageConfig.menuItems.Leads[ENV.lang]);
+        await this.leadActions.selectAllLeadsList();
+        await this.leadActions.searchLeadInListView(webToLeadData.fullName);
+        const actualOwner = await this.leadActions.getOwner();
+        await this.leadActions.validateWebToLeadAssignment(actualOwner);
+    }
+
 }
 export default leadSteps;
