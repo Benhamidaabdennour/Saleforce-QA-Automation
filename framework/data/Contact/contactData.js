@@ -81,13 +81,34 @@ const attributes = {
       'Opportunités', 'Requêtes', 'Historique de la campagne', 'Notes et pièces jointes'
     ],
   }
+
+  
 }
+
+const TECH_PARTNER_DATASET = {
+  valid: [
+    'LookupFilter TechPartner 1',
+    'LookupFilter TechPartner 2',
+    'LookupFilter TechPartner 3',
+    'LookupFilter TechPartner 4',
+    'LookupFilter TechPartner 5'
+  ],
+  invalid: [
+    'LookupFilter Not TechPartner 1',
+    'LookupFilter Not TechPartner 2',
+    'LookupFilter Not TechPartner 3',
+    'LookupFilter Not TechPartner 4',
+    'LookupFilter Not TechPartner 5'
+  ]
+};
 const lang = attributes[ENV.lang] || attributes.en;
 
 export const EXPECTED_PICKLIST_VALUES = lang.EXPECTED_PICKLIST_VALUES;
 export const CONTACT_FORM_LABELS      = lang.CONTACT_FORM_LABELS;
 export const CONTACT_DETAIL_LABELS    = lang.CONTACT_DETAIL_LABELS;
 export const CONTACT_RELATED_LISTS    = lang.CONTACT_RELATED_LISTS;
+export const VALID_TECH_PARTNERS      = TECH_PARTNER_DATASET.valid;
+export const INVALID_TECH_PARTNERS    = TECH_PARTNER_DATASET.invalid;
 
 // Exporting the contact data and picklist values for use in tests and actions
 export { contactDataset }    

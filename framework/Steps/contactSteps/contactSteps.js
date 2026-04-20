@@ -90,5 +90,15 @@ class contactsSteps {
       await this.contactsFormActions.searchContactInListView(recordName)
       await this.contactsFormActions.validateRelatedLists(CONTACT_RELATED_LISTS)
   }
+
+      async validateTechPartners(){
+        console.log(`Inspecting "Tech Partner" search results ...`);
+
+        await this.topMenuActions.navigateTo(languageConfig.menuItems.Contacts[ENV.lang]);
+        await this.contactsFormActions.openNewContactForm();
+        await this.contactsFormActions.openTechPartnerSearch();
+        await this.contactsFormActions.getTechPartnerSearchResults();
+        await this.contactsFormActions.validateTechPartners();
+      }
 }
 export default contactsSteps

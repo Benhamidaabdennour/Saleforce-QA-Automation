@@ -22,7 +22,12 @@ class contactsFormPage {
     this.assistant =  page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.AssistantName"]//input[@name="AssistantName"]')
     this.AssistantPhone =  page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.AssistantPhone"]//input[@name="AssistantPhone"]')
     this.leadSource = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.LeadSource"]//button[@role="combobox"]');
+    this.techPartner = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Tech_Partner__c"]//input[@role="combobox"]')
     
+    // Lookup Filter related 
+    this.techPartnerSearch = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Tech_Partner__c"]//lightning-base-combobox-item//lightning-icon//lightning-primitive-icon').first();
+    this.techPartnerSearchMore = page.locator('//*/force-list-view-manager-search-bar//lightning-input//lightning-primitive-input-simple//input')
+    this.techPartnerResults = page.locator('[role="dialog"] table[role="grid"]');    
     // Address information
     this.mailingCountry = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.MailingAddress"]//input[@role="combobox"][@name="country"]');
     this.mailingStreet =  page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.MailingAddress"]//textarea[@name="street"]');

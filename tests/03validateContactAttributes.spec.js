@@ -90,4 +90,9 @@ test.describe.serial(" Contact Creation And Validation", () => {
 
         await contactSteps.validateRelatedLists(fullName)
     });
+
+  test("Validate Lookup Filters", async () => {
+    await contactSteps.validateTechPartners()
+});
+
 });

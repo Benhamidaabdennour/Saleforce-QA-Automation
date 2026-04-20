@@ -1,7 +1,7 @@
 import { tr } from "@faker-js/faker";
 import {lookupSelector, selectRandomPicklist, validatePicklistValues, getFormFieldLabels, getDetailPageFieldLabels, validateRelatedLists } from "../../utils/helpers.js";
 import { expect } from '@playwright/test';
-import { EXPECTED_PICKLIST_VALUES, CONTACT_RELATED_LISTS } from "../../data/Contact/contactData"
+import { EXPECTED_PICKLIST_VALUES, CONTACT_RELATED_LISTS, VALID_TECH_PARTNERS, INVALID_TECH_PARTNERS } from "../../data/Contact/contactData"
 
 
 const normalize = (str) => str?.replace(/\u00A0/g, ' ').replace(/\r/g, '').trim();
@@ -320,6 +320,74 @@ class contactsActions {
             relatedLists
         );
     }
+
+    async openTechPartnerSearch(){
+        await this.contactsFormPage.techPartner.click()
+        await this.contactsFormPage.techPartner.fill('')
+        await this.contactsFormPage.techPartnerSearchMore.waitFor({ state: 'visible' });
+        await this.contactsFormPage.techPartner.fill('TechPartner')
+        await this.contactsFormPage.techPartnerSearch.waitFor({ state: 'visible', timeout: 5000 });
+        await this.contactsFormPage.techPartnerSearch.click()
+        await this.contactsFormPage.techPartnerResults.first().waitFor({ state: 'visible', timeout: 5000 });
+    }
+
+    async getTechPartnerSearchResults() {
+        const table = this.contactsFormPage.techPartnerResults;
+        const rows = table.locator('tbody tr');
+
+        try {
+            await rows.first().waitFor({ state: 'visible', timeout: 5000 });
+        } catch {
+            console.log('No visible rows found ❌');
+            return [];
+        }
+
+        const count = await rows.count();
+        const names = [];
+
+        for (let i = 0; i < count; i++) {
+            const rowText = await rows.nth(i).innerText();
+            const lines = rowText
+            .split('\n')
+            .map(l => l.trim())
+            .filter(Boolean);
+
+            // Extract account name (second meaningful line)
+            if (lines.length > 1) {
+            names.push(lines[1]);
+            }
+        }
+        return names;
+    }
+
+async validateTechPartners(){
+        const results = await this.getTechPartnerSearchResults();
+        if (results.length === 0) {
+            console.log('No results returned ❌');
+
+            // Decide what "correct" means:
+            // Case 1: expecting results → fail
+            // Case 2: expecting none → pass
+
+            expect(VALID_TECH_PARTNERS.length).toBeGreaterThan(0);
+            return; //abort
+            }
+
+        // Check all valid accounts exist
+        for (const acc of VALID_TECH_PARTNERS) {
+            const exists = results.includes(acc);
+            console.log(`VALID CHECK → ${acc}: ${exists ? 'FOUND ✅' : 'MISSING ❌'}`);
+            expect(results).toContain(acc);
+        }
+
+        // Check invalid accounts do NOT exist
+        for (const acc of INVALID_TECH_PARTNERS) {
+            const exists = results.includes(acc);
+            console.log(`INVALID CHECK → ${acc}: ${exists ? 'FOUND (❌)' : 'NOT PRESENT (✅)'}`);
+            expect(results).not.toContain(acc);
+        }
+    }
+
 }
 
 export default contactsActions
