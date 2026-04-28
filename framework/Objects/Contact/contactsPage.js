@@ -9,7 +9,6 @@
         this.recentListViewsText = page.locator('(//*/div//ul[@role="group"]//h3)[1]')
     
     }
-       // This is a test to see if a dynamic locator is better
         getContactLinkByName(name) {
             return this.page.locator('//*/tbody//tr//th//a[contains(@href, "/view")]')
                 .filter({ hasText: new RegExp(`^${name}$`) }); // exact match using regex

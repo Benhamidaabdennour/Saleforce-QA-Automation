@@ -3,7 +3,6 @@ import {lookupSelector, selectRandomPicklist, validatePicklistValues, getFormFie
 import { expect } from '@playwright/test';
 import { EXPECTED_PICKLIST_VALUES, CONTACT_RELATED_LISTS, VALID_TECH_PARTNERS, INVALID_TECH_PARTNERS } from "../../data/Contact/contactData"
 
-
 const normalize = (str) => str?.replace(/\u00A0/g, ' ').replace(/\r/g, '').trim();
 
 class contactsActions {
@@ -106,19 +105,6 @@ class contactsActions {
         await this.contactsFormPage.cancelBtn.click({ force: true });
 
     }
-    async saveForm() {
-        // This function was edited to include waiting before clicking on Details Tab
-        // by validation that the url changed to an actual record
-        await this.contactsFormPage.saveBtn.click();
-        
-        // Wait for the modal to close (form disappears after successful save)
-        await this.contactsFormPage.saveBtn.waitFor({ state: 'hidden', timeout: 10000 });
-        
-        // Wait for navigation to detail page
-        await this.contactsFormPage.saveBtn.page().waitForURL('**/view', { timeout: 10000 });
-        
-        // console.log('Record saved successfully'); uncomment for debugging only
-}
     async saveEdit() {
         await this.contactsFormPage.saveBtn.waitFor({ state: 'visible', timeout: 5000 });
         await this.contactsFormPage.saveBtn.click();
