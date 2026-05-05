@@ -33,7 +33,8 @@ const contactDataset = () => ({
     languages: 'English, French',
     level: "",
     description: faker.lorem.paragraph(),
-    department: faker.company.name()
+    department: faker.company.name(),
+    workingZones: [] // This will be set in the test after selecting from the picklist
 });
 
 const attributes = {

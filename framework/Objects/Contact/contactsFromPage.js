@@ -23,7 +23,12 @@ class contactsFormPage {
     this.AssistantPhone =  page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.AssistantPhone"]//input[@name="AssistantPhone"]')
     this.leadSource = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.LeadSource"]//button[@role="combobox"]');
     this.techPartner = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Tech_Partner__c"]//input[@role="combobox"]')
-    
+    this.availableCountries = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Available__c"]//button[@role="combobox"]')
+    this.workingZones = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Woring_Zones__c"]//ul[@role="listbox"]').nth(0)
+this.workingZonesAdd = page.locator(
+  '//div[@data-target-selection-name="sfdc:RecordField.Contact.Woring_Zones__c"]//button[@data-position-id]'
+).first(); // change to .nth(1) if needed
+ 
     // Lookup Filter related 
     this.techPartnerSearch = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Tech_Partner__c"]//lightning-base-combobox-item//lightning-icon//lightning-primitive-icon').first();
     this.techPartnerSearchMore = page.locator('//*/force-list-view-manager-search-bar//lightning-input//lightning-primitive-input-simple//input')

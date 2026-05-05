@@ -193,6 +193,24 @@ async function validateRelatedLists(page, expectedLists) {
   console.log(`✅ All expected related lists are present`);
 }
 
+async function moveOneItem(availableLocator){
+  const page = availableLocator.page();
+  const modifier = process.platform === 'darwin' ? 'Meta' : 'Control';
+
+  const options = availableLocator.locator('div[role="option"]');
+  const initialCount = await options.count();
+
+  // select first item
+  await availableLocator.click();
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('Space');
+
+  // move it
+  await page.keyboard.press(`${modifier}+ArrowRight`);
+
+  // 🔥 wait for list size to decrease (THIS is the fix)
+  await expect(options).toHaveCount(initialCount - 1);
+}
 export {  lookupSelector, 
           selectRandomPicklist, 
           getPicklistValues, 
@@ -200,5 +218,6 @@ export {  lookupSelector,
           getDetailPageFieldLabels, 
           getFormFieldLabels,
           validateRelatedLists,
-          getRelatedListTitles
+          getRelatedListTitles,
+          moveOneItem
       };

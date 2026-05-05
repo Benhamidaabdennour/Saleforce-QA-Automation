@@ -26,7 +26,6 @@ class ContactDetailPage {
     this.description = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.Description"]//lightning-formatted-text[@data-output-element-id="output-field"]')
     this.mailingAddress = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.MailingAddress"]//lightning-formatted-address[@data-output-element-id="output-field"]')
     this.otherAddress = page.locator('//*/div[@data-target-selection-name="sfdc:RecordField.Contact.OtherAddress"]//lightning-formatted-address[@data-output-element-id="output-field"]')
-
     // All compact view fields
     this.recordName = page.locator('//*/lightning-formatted-name[@slot="primaryField"]')
     this.compactAccountName = page.locator('//records-highlights-details-item//a[contains(@href, "/lightning/r/Account/")]')

@@ -1,5 +1,5 @@
 import { tr } from "@faker-js/faker";
-import {lookupSelector, selectRandomPicklist, validatePicklistValues, getFormFieldLabels, getDetailPageFieldLabels, validateRelatedLists } from "../../utils/helpers.js";
+import {lookupSelector, selectRandomPicklist, validatePicklistValues, getFormFieldLabels, getDetailPageFieldLabels, validateRelatedLists, moveOneItem } from "../../utils/helpers.js";
 import { expect } from '@playwright/test';
 import { EXPECTED_PICKLIST_VALUES, CONTACT_RELATED_LISTS, VALID_TECH_PARTNERS, INVALID_TECH_PARTNERS } from "../../data/Contact/contactData"
 
@@ -88,8 +88,24 @@ class contactsActions {
         if(data.otherStreet) await form.otherStreet.fill(data.otherStreet)
         if(data.otherCity) await form.otherCity.fill(data.otherCity)
         if(data.otherPostalCode) await form.otherPostalCode.fill(data.otherPostalCode)
-    }
-       
+
+        // multiSelect picklist
+        data.workingZones.push(await moveOneItem(form.workingZones))
+        data.workingZones.push(await moveOneItem(form.workingZones))
+
+}
+    async saveForm() {
+        // This function was edited to include waiting before clicking on Details Tab
+        // by validation that the url changed to an actual record
+        await this.contactsFormPage.saveBtn.click();
+        
+        // Wait for the modal to close (form disappears after successful save)
+        await this.contactsFormPage.saveBtn.waitFor({ state: 'hidden', timeout: 10000 });
+        
+        // Wait for navigation to detail page
+        await this.contactsFormPage.saveBtn.page().waitForURL('**/view', { timeout: 10000 });
+        }
+
     async saveEmpty(){
         /**
          You can use this function to save a non-empty form
